@@ -65,6 +65,7 @@ body {
   gap: 3vmin;
   position: absolute; left: 50%; top: 50%; transform: translate(0%, -50%);
   padding: 24px;
+  will-change: transform;
 }
 
 #image-track > .image {
@@ -78,6 +79,7 @@ body {
   user-select: none;
   -webkit-user-drag: none;
   touch-action: pan-y;
+  will-change: object-position;
 }
 
 /* Mobile-first stacking for iPhone 11 (~414px width) */
@@ -114,4 +116,29 @@ body {
 /* Taller screens or when in landscape */
 @media (min-height: 700px) and (min-width: 900px) {
   .track-wrapper { min-height: 76vh; }
+}
+
+/* Autoplay keyframes (CSS-driven) */
+@keyframes pan-track {
+  0%   { transform: translate(0%, -50%); }
+  100% { transform: translate(-100%, -50%); }
+}
+@keyframes pan-image {
+  0%   { object-position: 100% center; }
+  100% { object-position: 0% center; }
+}
+
+#image-track.autoplaying {
+  animation-name: pan-track;
+  animation-duration: var(--auto-duration, 60s);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+#image-track.autoplaying > .image {
+  animation-name: pan-image;
+  animation-duration: var(--auto-duration, 60s);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
