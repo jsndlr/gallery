@@ -1,84 +1,117 @@
+:root {
+  --bg: #0f0f13;
+  --fg: #ffffff;
+  --muted: #b6b6c9;
+  --accent: #ff6b9e;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
 body {
-    height: 100vh;
-    width: 100vw;
-    background-color: #0f0f13;
-    margin: 0rem;
-    overflow: hidden;
+  margin: 0;
+  color: var(--fg);
+  background: var(--bg);
+  font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app {
+  min-height: 100svh;
+  padding: calc(16px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 24px;
+  align-items: center;
 }
 
 #letter-container {
-    width: 50%;
-    height: 100vh;
-    overflow-y: auto;
-    padding: 5rem;
-    box-sizing: border-box;
-    color: #FFF;
-    font-family: 'Poppins', sans-serif;
-    font-size: 28px;
-    font-weight: 200;
-    display: flex;
-    align-items: center;
-    user-select: none; /* Standard syntax */
+  max-height: 100%;
+  padding: 24px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
 }
 
 .letter {
-    display: none;
+  display: none;
+  font-size: clamp(18px, 2.2vw, 28px);
+  font-weight: 200;
+  line-height: 1.5;
+  text-wrap: pretty;
+  text-align: left;
 }
 
-#image-track > .image {
-    width: 40vmin;
-    height: 56vmin;
-    object-fit: cover;
-    object-position: 100% 50%;
+.track-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  min-height: min(70vh, 720px);
 }
 
 #image-track {
-    display: flex;
-    gap: 4vmin;
-    position: absolute; left: 50%; top: 50%; transform: translate(0%, -50%);
+  display: flex;
+  gap: 3vmin;
+  position: absolute; left: 50%; top: 50%; transform: translate(0%, -50%);
+  padding: 24px;
 }
 
-@media screen and (max-width: 1020px) {
+#image-track > .image {
+  width: clamp(140px, 28vmin, 280px);
+  height: calc(clamp(140px, 28vmin, 280px) * 1.4);
+  object-fit: cover;
+  object-position: 100% 50%;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.08);
+  user-select: none;
+  -webkit-user-drag: none;
+  touch-action: pan-y;
+}
 
-    body {
-        display: flex;
-        flex-direction: column;
-    }
+/* Mobile-first stacking for iPhone 11 (~414px width) */
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 
-    #letter-container {
-        position: relative;
-        top: 15%;
-        width: 150vw;
-        height: 50vh;
-        padding: 12rem;
-        overflow-y: auto;
-        box-sizing: border-box;
-        color: #FFF;
-        font-family: 'Poppins', sans-serif;
-        font-size: 80px;
-        font-weight: 200;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        user-select: none; /* Standard syntax */
-    }
+  #letter-container {
+    padding: 20px 16px;
+  }
 
-    #image-track {
-        
-        margin-top: 70rem;
-        display: flex;
-        gap: 4vmin;
-        position: absolute; left: 30%; top: 50%; transform: translate(0%, -50%);
-    }
+  .letter {
+    font-size: clamp(18px, 5vw, 22px);
+    text-align: center;
+  }
 
-    #image-track > .image {
-        width: 100vmin;
-        height: 134.4vmin;
-        object-fit: cover;
-        object-position: 100% 50%;
-    }
-    
-    
+  .track-wrapper {
+    min-height: 60vh;
+  }
 
+  #image-track {
+    gap: 5vmin;
+    padding: 16px;
+  }
+
+  #image-track > .image {
+    width: min(72vw, 320px);
+    height: calc(min(72vw, 320px) * 1.45);
+  }
+}
+
+/* Taller screens or when in landscape */
+@media (min-height: 700px) and (min-width: 900px) {
+  .track-wrapper { min-height: 76vh; }
 }
